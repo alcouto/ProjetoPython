@@ -1,0 +1,39 @@
+# Pastas de cache e dependências
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambientes virtuais
+env/
+venv/
+
+# Configurações locais do VS Code
+.vscode/
+
+# Arquivos temporários e logs
+*.log
+*.tmp
+
+# Arquivos de build
+build/
+dist/
+*.egg-info/
+
+# Banco de dados local (opcional)
+*.db
+
+# Projetos
+meu_projeto/Buid/
+meu_projeto/dist/
+
+ProjectSQLServer/Buid/
+ProjectSQLServer/dist/
+
+SIGP/Buid/
+SIGP/dist/
+
+SIP/Buid/
+SIP/dist/
+
+Transcricao/
