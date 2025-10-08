@@ -13,23 +13,12 @@ def carregar_dados():
     cursor.execute(sql)
     resultados = cursor.fetchall()
 
-    print(resultados[0][0], resultados[0][1], resultados[0][1])
-    print(resultados[1][0], resultados[1][1], resultados[1][1])
-
-    # for linha in resultados:
-    #    for campo in linha:
-    #        # imprime os campos na mesma linha, separados por tabulação
-    #        print(campo, end="\t")
-    #        print()  # quebra de linha após cada linha
-
     # Insere os dados no Treeview
     i = 0
     for linha in resultados:
         tree.insert("", "end", values=(
             resultados[i][0], resultados[i][1], resultados[i][2]))
         i = i+1
-
-    # tree.insert("", "end", values=("1111", "2222", "3333"))
 
 
 # --- Interface gráfica ---
@@ -50,17 +39,37 @@ for col in colunas:
 
 tree.pack()
 
-# --- Banco de dados (Exemplo com SQLite) ---
-server = "DESKTOP-08K13CE\SQLEXPRESS"
-database = 'SIGP'  # Nome do banco de dados
-username = 'alcouto'  # Seu nome de usuário
-password = 'alcouto'  # Sua senha
 
-conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+# --- Banco de dados Azure ---
+server = 'grupo-sigp.database.windows.net'
+database = 'SIGP'
+username = 'alcouto'
+password = 'Irm@2000'  # use a senha que definiu
+driver = '{ODBC Driver 17 for SQL Server}'
+
+conn_str = (
+    f'DRIVER={driver};'
+    f'SERVER={server},1433;'
+    f'DATABASE={database};'
+    f'UID={username};'
+    f'PWD={password};'
+    'Encrypt=yes;'
+    'TrustServerCertificate=no;'
+    'Connection Timeout=30;'
+)
 
 conn = pyodbc.connect(conn_str)
-
 cursor = conn.cursor()
+
+# --- Banco de dados Local ---
+# server = "DESKTOP-08K13CE\SQLEXPRESS"
+# server = "192.168.0.25,1433"
+# database = 'SIGP'  # Nome do banco de dados
+# username = 'alcouto'  # Seu nome de usuário
+# password = 'alcouto'  # Sua senha
+# conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+# conn = pyodbc.connect(conn_str)
+# cursor = conn.cursor()
 
 # Carrega os dados do banco para a tabela
 carregar_dados()
