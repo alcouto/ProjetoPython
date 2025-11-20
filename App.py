@@ -3,33 +3,51 @@ Connects to a SQL database using pyodbc
 """
 import pyodbc
 
-# Exemplo: 'localhost' ou o nome do servidor
-server = 'DESKTOP-08K13CE\SQLEXPRESS'
-database = 'SIGP'  # Nome do banco de dados
-username = 'alcouto'  # Seu nome de usuário
-password = 'alcouto'  # Sua senha
+# Servidor no Azure --------------------------------------------------------------------
+# server = 'grupo-sigp.database.windows.net'
+# database = 'SISPC'
+# username = 'alcouto'
+# password = 'Irm@2000'  # use a senha que definiu
+# driver = '{ODBC Driver 17 for SQL Server}'
 
-conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+# conn_str = (
+#    f'DRIVER={driver};'
+#    f'SERVER={server},1433;'
+#    f'DATABASE={database};'
+#    f'UID={username};'
+#    f'PWD={password};'
+#    'Encrypt=yes;'
+#    'TrustServerCertificate=no;'
+#    'Connection Timeout=30;'
+# )
+
+# Servidor Interno --------------------------------------------------------------------
+# server = r"DESKTOP-08K13CE\SQLEXPRESS"
+server = r"desktop-ndn2tot"
+database = 'DBDoBinho'
+username = 'alcouto'
+password = 'alcouto'
+driver = '{ODBC Driver 17 for SQL Server}'
+
+conn_str = (
+    f'DRIVER={driver};'
+    f'SERVER={server},1433;'
+    f'DATABASE={database};'
+    f'UID={username};'
+    f'PWD={password};'
+    'Encrypt=yes;'
+    'TrustServerCertificate=yes;'
+    'Connection Timeout=30;'
+)
 
 conn = pyodbc.connect(conn_str)
 
 cursor = conn.cursor()
-
-sql = '''select Projetos.ID_Projeto, Projetos.NomeProjeto, Licitacao.IdLicitacao, Contrato.IdContrato, Projetos.Fase 
-               from Projetos
-               left join Licitacao on Projetos.ID_Projeto = Licitacao.IdProjeto
-               left join Contrato on Projetos.ID_Projeto = Contrato.IdProjeto
-               order by Projetos.ID_Projeto'''
-
+sql = '''select * from clientes'''
 cursor.execute(sql)
-
 resultados = cursor.fetchall()
 
 for linha in resultados:
     print(f"ID: {linha[0]}, Nome: {linha[1]}")
-
-# for row in cursor:
-#    print(row)
-
 
 conn.close()
