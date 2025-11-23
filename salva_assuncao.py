@@ -11,7 +11,7 @@ CORS(app)
 
 def conectar_sql():
     server = r"desktop-ndn2tot"
-    database = 'DBDoBinho'
+    database = 'Pegasus'
     username = 'alcouto'
     password = 'alcouto'
     driver = '{ODBC Driver 17 for SQL Server}'
