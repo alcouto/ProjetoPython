@@ -32,7 +32,8 @@ def buscar_usuario(id):
     cursor = conn.cursor()
 
     # Consulta somente a senha do usuário com o Id informado
-    cursor.execute("SELECT Id, Senha FROM Usuarios WHERE RTRIM(Id) = ?", id)
+    cursor.execute(
+        "SELECT Id, Senha, Nome FROM Usuarios WHERE RTRIM(Id) = ?", id)
     row = cursor.fetchone()
 
     conn.close()
@@ -44,7 +45,8 @@ def buscar_usuario(id):
     # Monta o retorno
     usuario = {
         "id": row[0],
-        "senha": row[1]
+        "senha": row[1],
+        "nome": row[2]
     }
 
     return jsonify(usuario)
